@@ -501,16 +501,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjovianyuCMSC33750treeddeb706286138562fea3772bd262494b87524c78targetblankddeb706a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jovianyu/CMSC33750/tree/ddeb706286138562fea3772bd262494b87524c78" target="_blank">ddeb706</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjovianyuCMSC33750treed0cc64f171a6187f43e97df712e722dd615ea3b4targetblankd0cc64fa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jovianyu/CMSC33750/tree/d0cc64f171a6187f43e97df712e722dd615ea3b4" target="_blank">d0cc64f</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjovianyuCMSC33750treeddeb706286138562fea3772bd262494b87524c78targetblankddeb706a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjovianyuCMSC33750treed0cc64f171a6187f43e97df712e722dd615ea3b4targetblankd0cc64fa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jovianyu/CMSC33750/tree/ddeb706286138562fea3772bd262494b87524c78" target="_blank">ddeb706</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jovianyu/CMSC33750/tree/d0cc64f171a6187f43e97df712e722dd615ea3b4" target="_blank">d0cc64f</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -560,6 +560,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jovianyu/CMSC33750/blob/d0cc64f171a6187f43e97df712e722dd615ea3b4/analysis/hw1.Rmd" target="_blank">d0cc64f</a>
+</td>
+<td>
+Jovian Yu
+</td>
+<td>
+2020-10-01
+</td>
+<td>
+Showing setup code
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jovianyu/CMSC33750/64fd5a0d6343416d90e19f38e0c84b81284019e4/docs/hw1.html" target="_blank">64fd5a0</a>
+</td>
+<td>
+Jovian Yu
+</td>
+<td>
+2020-10-01
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -640,12 +674,171 @@ Initial commit, first homework assignment
 <ul>
 <li>Loading necessary libraries</li>
 </ul>
+<pre class="r"><code>libraries &lt;- c(&quot;BiocManager&quot;, &quot;TCGAbiolinks&quot;, &quot;tidyverse&quot;, &quot;DT&quot;, &quot;SummarizedExperiment&quot;, &quot;survival&quot;, &quot;survminer&quot;, &quot;ggbio&quot;)
+biocmanager &lt;- c(FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE)
+
+libreq &lt;- function(package, bioc) {
+  if (!require(package, character.only = TRUE)) {
+    ifelse(bioc, BiocManager::install(package), install.packages(package))
+  }
+}
+
+installed_libraries &lt;- mapply(
+  libreq,
+  libraries,
+  biocmanager
+)</code></pre>
+<pre><code>Loading required package: BiocManager</code></pre>
+<pre><code>Bioconductor version 3.11 (BiocManager 1.30.10), ?BiocManager::install for help</code></pre>
+<pre><code>Loading required package: TCGAbiolinks</code></pre>
+<pre><code>Loading required package: tidyverse</code></pre>
+<pre><code>-- Attaching packages ----------------------------------------------------------------------------------------------------------------------- tidyverse 1.3.0 --</code></pre>
+<pre><code>v ggplot2 3.3.2     v purrr   0.3.4
+v tibble  3.0.3     v dplyr   1.0.2
+v tidyr   1.1.2     v stringr 1.4.0
+v readr   1.3.1     v forcats 0.5.0</code></pre>
+<pre><code>-- Conflicts -------------------------------------------------------------------------------------------------------------------------- tidyverse_conflicts() --
+x dplyr::filter() masks stats::filter()
+x dplyr::lag()    masks stats::lag()</code></pre>
+<pre><code>Loading required package: DT</code></pre>
+<pre><code>Loading required package: SummarizedExperiment</code></pre>
+<pre><code>Loading required package: GenomicRanges</code></pre>
+<pre><code>Loading required package: stats4</code></pre>
+<pre><code>Loading required package: BiocGenerics</code></pre>
+<pre><code>Loading required package: parallel</code></pre>
+<pre><code>
+Attaching package: &#39;BiocGenerics&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:parallel&#39;:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB</code></pre>
+<pre><code>The following objects are masked from &#39;package:dplyr&#39;:
+
+    combine, intersect, setdiff, union</code></pre>
+<pre><code>The following objects are masked from &#39;package:stats&#39;:
+
+    IQR, mad, sd, var, xtabs</code></pre>
+<pre><code>The following objects are masked from &#39;package:base&#39;:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which, which.max, which.min</code></pre>
+<pre><code>Loading required package: S4Vectors</code></pre>
+<pre><code>
+Attaching package: &#39;S4Vectors&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:dplyr&#39;:
+
+    first, rename</code></pre>
+<pre><code>The following object is masked from &#39;package:tidyr&#39;:
+
+    expand</code></pre>
+<pre><code>The following object is masked from &#39;package:base&#39;:
+
+    expand.grid</code></pre>
+<pre><code>Loading required package: IRanges</code></pre>
+<pre><code>
+Attaching package: &#39;IRanges&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:dplyr&#39;:
+
+    collapse, desc, slice</code></pre>
+<pre><code>The following object is masked from &#39;package:purrr&#39;:
+
+    reduce</code></pre>
+<pre><code>The following object is masked from &#39;package:grDevices&#39;:
+
+    windows</code></pre>
+<pre><code>Loading required package: GenomeInfoDb</code></pre>
+<pre><code>Loading required package: Biobase</code></pre>
+<pre><code>Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    &#39;browseVignettes()&#39;. To cite Bioconductor, see
+    &#39;citation(&quot;Biobase&quot;)&#39;, and for packages &#39;citation(&quot;pkgname&quot;)&#39;.</code></pre>
+<pre><code>Loading required package: DelayedArray</code></pre>
+<pre><code>Loading required package: matrixStats</code></pre>
+<pre><code>
+Attaching package: &#39;matrixStats&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:Biobase&#39;:
+
+    anyMissing, rowMedians</code></pre>
+<pre><code>The following object is masked from &#39;package:dplyr&#39;:
+
+    count</code></pre>
+<pre><code>
+Attaching package: &#39;DelayedArray&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:matrixStats&#39;:
+
+    colMaxs, colMins, colRanges, rowMaxs, rowMins, rowRanges</code></pre>
+<pre><code>The following object is masked from &#39;package:purrr&#39;:
+
+    simplify</code></pre>
+<pre><code>The following objects are masked from &#39;package:base&#39;:
+
+    aperm, apply, rowsum</code></pre>
+<pre><code>Loading required package: survival</code></pre>
+<pre><code>Loading required package: survminer</code></pre>
+<pre><code>Loading required package: ggpubr</code></pre>
+<pre><code>Loading required package: ggbio</code></pre>
+<pre><code>Registered S3 method overwritten by &#39;GGally&#39;:
+  method from   
+  +.gg   ggplot2</code></pre>
+<pre><code>Need specific help about ggbio? try mailing 
+ the maintainer or visit http://tengfei.github.com/ggbio/</code></pre>
+<pre><code>
+Attaching package: &#39;ggbio&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:ggplot2&#39;:
+
+    geom_bar, geom_rect, geom_segment, ggsave, stat_bin, stat_identity,
+    xlim</code></pre>
+<pre class="r"><code>loaded_libraries &lt;- lapply(libraries, library, character.only = TRUE)</code></pre>
 </div>
 <div id="downloading-gdc-data" class="section level1">
 <h1>Downloading GDC data</h1>
 <ul>
 <li>TCGA head and neck cohort only</li>
 </ul>
+<pre class="r"><code>query &lt;- GDCquery(project = &quot;TCGA-HNSC&quot;,
+                  data.category = &quot;Transcriptome Profiling&quot;,
+                  data.type = &quot;Gene Expression Quantification&quot;, 
+                  workflow.type = &quot;HTSeq - Counts&quot;)</code></pre>
+<pre><code>--------------------------------------</code></pre>
+<pre><code>o GDCquery: Searching in GDC database</code></pre>
+<pre><code>--------------------------------------</code></pre>
+<pre><code>Genome of reference: hg38</code></pre>
+<pre><code>--------------------------------------------</code></pre>
+<pre><code>oo Accessing GDC. This might take a while...</code></pre>
+<pre><code>--------------------------------------------</code></pre>
+<pre><code>ooo Project: TCGA-HNSC</code></pre>
+<pre><code>--------------------</code></pre>
+<pre><code>oo Filtering results</code></pre>
+<pre><code>--------------------</code></pre>
+<pre><code>ooo By data.type</code></pre>
+<pre><code>ooo By workflow.type</code></pre>
+<pre><code>----------------</code></pre>
+<pre><code>oo Checking data</code></pre>
+<pre><code>----------------</code></pre>
+<pre><code>ooo Check if there are duplicated cases</code></pre>
+<pre><code>ooo Check if there results for the query</code></pre>
+<pre><code>-------------------</code></pre>
+<pre><code>o Preparing output</code></pre>
+<pre><code>-------------------</code></pre>
+<pre class="r"><code>GDCdownload(query)</code></pre>
+<pre><code>Downloading data for project TCGA-HNSC</code></pre>
+<pre><code>Of the 546 files for download 546 already exist.</code></pre>
+<pre><code>All samples have been already downloaded</code></pre>
+<pre class="r"><code>data &lt;- GDCprepare(query)</code></pre>
+<pre><code>Starting to add information to samples</code></pre>
+<pre><code> =&gt; Add clinical information to samples</code></pre>
+<pre><code> =&gt; Adding TCGA molecular information from marker papers</code></pre>
+<pre><code> =&gt; Information will have prefix &#39;paper_&#39; </code></pre>
+<pre><code>hnsc subtype information from:doi:10.1038/nature14129</code></pre>
+<pre><code>Accessing www.ensembl.org to get gene information</code></pre>
+<pre><code>Downloading genome information (try:0) Using: Human genes (GRCh38.p13)</code></pre>
+<pre><code>From the 60483 genes we couldn&#39;t map 4026</code></pre>
 </div>
 <div id="data-exploration" class="section level1">
 <h1>Data Exploration</h1>
@@ -657,38 +850,38 @@ Initial commit, first homework assignment
 <pre><code> [1] &quot;barcode&quot;                     &quot;patient&quot;                    
  [3] &quot;sample&quot;                      &quot;shortLetterCode&quot;            
  [5] &quot;definition&quot;                  &quot;sample_submitter_id&quot;        
- [7] &quot;initial_weight&quot;              &quot;oct_embedded&quot;               
- [9] &quot;sample_type&quot;                 &quot;state&quot;                      
-[11] &quot;sample_id&quot;                   &quot;is_ffpe&quot;                    
-[13] &quot;days_to_collection&quot;          &quot;pathology_report_uuid&quot;      
-[15] &quot;shortest_dimension&quot;          &quot;tissue_type&quot;                
-[17] &quot;intermediate_dimension&quot;      &quot;longest_dimension&quot;          
-[19] &quot;sample_type_id&quot;              &quot;submitter_id&quot;               
-[21] &quot;ajcc_pathologic_t&quot;           &quot;ajcc_pathologic_stage&quot;      
-[23] &quot;year_of_diagnosis&quot;           &quot;ajcc_clinical_m&quot;            
-[25] &quot;primary_diagnosis&quot;           &quot;progression_or_recurrence&quot;  
-[27] &quot;ajcc_clinical_n&quot;             &quot;prior_malignancy&quot;           
-[29] &quot;tissue_or_organ_of_origin&quot;   &quot;tumor_stage&quot;                
-[31] &quot;morphology&quot;                  &quot;prior_treatment&quot;            
-[33] &quot;age_at_diagnosis&quot;            &quot;synchronous_malignancy&quot;     
-[35] &quot;ajcc_pathologic_n&quot;           &quot;treatments&quot;                 
-[37] &quot;ajcc_clinical_stage&quot;         &quot;tumor_grade&quot;                
-[39] &quot;ajcc_clinical_t&quot;             &quot;diagnosis_id&quot;               
-[41] &quot;site_of_resection_or_biopsy&quot; &quot;days_to_diagnosis&quot;          
-[43] &quot;icd_10_code&quot;                 &quot;classification_of_tumor&quot;    
-[45] &quot;days_to_last_follow_up&quot;      &quot;last_known_disease_status&quot;  
-[47] &quot;ajcc_staging_system_edition&quot; &quot;ajcc_pathologic_m&quot;          
+ [7] &quot;submitter_id&quot;                &quot;is_ffpe&quot;                    
+ [9] &quot;tissue_type&quot;                 &quot;days_to_collection&quot;         
+[11] &quot;sample_type_id&quot;              &quot;sample_id&quot;                  
+[13] &quot;oct_embedded&quot;                &quot;initial_weight&quot;             
+[15] &quot;intermediate_dimension&quot;      &quot;longest_dimension&quot;          
+[17] &quot;state&quot;                       &quot;pathology_report_uuid&quot;      
+[19] &quot;sample_type&quot;                 &quot;shortest_dimension&quot;         
+[21] &quot;days_to_last_follow_up&quot;      &quot;prior_malignancy&quot;           
+[23] &quot;morphology&quot;                  &quot;last_known_disease_status&quot;  
+[25] &quot;synchronous_malignancy&quot;      &quot;ajcc_clinical_stage&quot;        
+[27] &quot;age_at_diagnosis&quot;            &quot;classification_of_tumor&quot;    
+[29] &quot;tumor_grade&quot;                 &quot;tumor_stage&quot;                
+[31] &quot;days_to_diagnosis&quot;           &quot;ajcc_pathologic_t&quot;          
+[33] &quot;site_of_resection_or_biopsy&quot; &quot;diagnosis_id&quot;               
+[35] &quot;year_of_diagnosis&quot;           &quot;tissue_or_organ_of_origin&quot;  
+[37] &quot;ajcc_clinical_t&quot;             &quot;ajcc_clinical_n&quot;            
+[39] &quot;prior_treatment&quot;             &quot;ajcc_pathologic_n&quot;          
+[41] &quot;icd_10_code&quot;                 &quot;progression_or_recurrence&quot;  
+[43] &quot;primary_diagnosis&quot;           &quot;treatments&quot;                 
+[45] &quot;ajcc_staging_system_edition&quot; &quot;ajcc_pathologic_stage&quot;      
+[47] &quot;ajcc_clinical_m&quot;             &quot;ajcc_pathologic_m&quot;          
 [49] &quot;exposure_id&quot;                 &quot;alcohol_history&quot;            
-[51] &quot;years_smoked&quot;                &quot;cigarettes_per_day&quot;         
-[53] &quot;pack_years_smoked&quot;           &quot;demographic_id&quot;             
-[55] &quot;age_at_index&quot;                &quot;days_to_birth&quot;              
-[57] &quot;gender&quot;                      &quot;days_to_death&quot;              
-[59] &quot;ethnicity&quot;                   &quot;race&quot;                       
-[61] &quot;year_of_death&quot;               &quot;year_of_birth&quot;              
-[63] &quot;vital_status&quot;                &quot;bcr_patient_barcode&quot;        
-[65] &quot;disease_type&quot;                &quot;primary_site&quot;               
-[67] &quot;released&quot;                    &quot;name&quot;                       
-[69] &quot;project_id&quot;                  &quot;releasable&quot;                 
+[51] &quot;cigarettes_per_day&quot;          &quot;years_smoked&quot;               
+[53] &quot;pack_years_smoked&quot;           &quot;ethnicity&quot;                  
+[55] &quot;race&quot;                        &quot;vital_status&quot;               
+[57] &quot;gender&quot;                      &quot;age_at_index&quot;               
+[59] &quot;days_to_birth&quot;               &quot;year_of_birth&quot;              
+[61] &quot;year_of_death&quot;               &quot;demographic_id&quot;             
+[63] &quot;days_to_death&quot;               &quot;bcr_patient_barcode&quot;        
+[65] &quot;project_id&quot;                  &quot;primary_site&quot;               
+[67] &quot;disease_type&quot;                &quot;releasable&quot;                 
+[69] &quot;released&quot;                    &quot;name&quot;                       
 [71] &quot;paper_patient&quot;               &quot;paper_RNA&quot;                  
 [73] &quot;paper_Methylation&quot;           &quot;paper_RPPA&quot;                 
 [75] &quot;paper_miRNA&quot;                 &quot;paper_Copy.Number&quot;          
