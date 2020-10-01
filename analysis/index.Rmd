@@ -9,3 +9,5 @@ editor_options:
 ---
 
 Course site for CMSC33750 with homework/projects.
+
+* [Homework 1](hw1.html)

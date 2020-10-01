@@ -434,7 +434,7 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 </div>
 <div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -501,16 +501,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrong340565e"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> 340565e </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjovianyuCMSC33750tree8fc4415dbb6d9bd69268d37b037ce379fa828a1ftargetblank8fc4415a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jovianyu/CMSC33750/tree/8fc4415dbb6d9bd69268d37b037ce379fa828a1f" target="_blank">8fc4415</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrong340565e" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjovianyuCMSC33750tree8fc4415dbb6d9bd69268d37b037ce379fa828a1ftargetblank8fc4415a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version 340565e. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jovianyu/CMSC33750/tree/8fc4415dbb6d9bd69268d37b037ce379fa828a1f" target="_blank">8fc4415</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -522,8 +522,10 @@ Ignored files:
 
 Untracked files:
     Untracked:  GDCdata/
-    Untracked:  MANIFEST.txt
-    Untracked:  analysis/hw1.Rmd
+
+Unstaged changes:
+    Modified:   analysis/hw1.Rmd
+    Modified:   analysis/index.Rmd
 
 </code></pre>
 <p>
@@ -536,9 +538,69 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with <code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/hw1.Rmd</code>) and HTML (<code>docs/hw1.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jovianyu/CMSC33750/blob/8fc4415dbb6d9bd69268d37b037ce379fa828a1f/analysis/hw1.Rmd" target="_blank">8fc4415</a>
+</td>
+<td>
+Jovian Yu
+</td>
+<td>
+2020-10-01
+</td>
+<td>
+Initial commit, first homework assignment
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jovianyu/CMSC33750/8fc4415dbb6d9bd69268d37b037ce379fa828a1f/docs/hw1.html" target="_blank">8fc4415</a>
+</td>
+<td>
+Jovian Yu
+</td>
+<td>
+2020-10-01
+</td>
+<td>
+Initial commit, first homework assignment
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
@@ -548,763 +610,55 @@ There are no past versions. Publish this analysis with <code>wflow_publish()</co
 <ul>
 <li>Loading necessary libraries</li>
 </ul>
-<pre class="r"><code>libraries &lt;- c(&quot;BiocManager&quot;, &quot;TCGAbiolinks&quot;, &quot;tidyverse&quot;, &quot;DT&quot;, &quot;SummarizedExperiment&quot;, &quot;survival&quot;, &quot;survminer&quot;, &quot;ggbio&quot;)
-biocmanager &lt;- c(FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE)
-
-libreq &lt;- function(package, bioc) {
-  if (!require(package, character.only = TRUE)) {
-    ifelse(bioc, BiocManager::install(package), install.packages(package))
-  }
-}
-
-installed_libraries &lt;- mapply(
-  libreq,
-  libraries,
-  biocmanager
-)</code></pre>
-<pre><code>Loading required package: BiocManager</code></pre>
-<pre><code>Bioconductor version 3.11 (BiocManager 1.30.10), ?BiocManager::install for help</code></pre>
-<pre><code>Loading required package: TCGAbiolinks</code></pre>
-<pre><code>Loading required package: tidyverse</code></pre>
-<pre><code>-- Attaching packages ----------------------------------------------------------------------------------------------------------------------- tidyverse 1.3.0 --</code></pre>
-<pre><code>v ggplot2 3.3.2     v purrr   0.3.4
-v tibble  3.0.3     v dplyr   1.0.2
-v tidyr   1.1.2     v stringr 1.4.0
-v readr   1.3.1     v forcats 0.5.0</code></pre>
-<pre><code>-- Conflicts -------------------------------------------------------------------------------------------------------------------------- tidyverse_conflicts() --
-x dplyr::filter() masks stats::filter()
-x dplyr::lag()    masks stats::lag()</code></pre>
-<pre><code>Loading required package: DT</code></pre>
-<pre><code>Loading required package: SummarizedExperiment</code></pre>
-<pre><code>Loading required package: GenomicRanges</code></pre>
-<pre><code>Loading required package: stats4</code></pre>
-<pre><code>Loading required package: BiocGenerics</code></pre>
-<pre><code>Loading required package: parallel</code></pre>
-<pre><code>
-Attaching package: &#39;BiocGenerics&#39;</code></pre>
-<pre><code>The following objects are masked from &#39;package:parallel&#39;:
-
-    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
-    clusterExport, clusterMap, parApply, parCapply, parLapply,
-    parLapplyLB, parRapply, parSapply, parSapplyLB</code></pre>
-<pre><code>The following objects are masked from &#39;package:dplyr&#39;:
-
-    combine, intersect, setdiff, union</code></pre>
-<pre><code>The following objects are masked from &#39;package:stats&#39;:
-
-    IQR, mad, sd, var, xtabs</code></pre>
-<pre><code>The following objects are masked from &#39;package:base&#39;:
-
-    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
-    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
-    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
-    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
-    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
-    union, unique, unsplit, which, which.max, which.min</code></pre>
-<pre><code>Loading required package: S4Vectors</code></pre>
-<pre><code>
-Attaching package: &#39;S4Vectors&#39;</code></pre>
-<pre><code>The following objects are masked from &#39;package:dplyr&#39;:
-
-    first, rename</code></pre>
-<pre><code>The following object is masked from &#39;package:tidyr&#39;:
-
-    expand</code></pre>
-<pre><code>The following object is masked from &#39;package:base&#39;:
-
-    expand.grid</code></pre>
-<pre><code>Loading required package: IRanges</code></pre>
-<pre><code>
-Attaching package: &#39;IRanges&#39;</code></pre>
-<pre><code>The following objects are masked from &#39;package:dplyr&#39;:
-
-    collapse, desc, slice</code></pre>
-<pre><code>The following object is masked from &#39;package:purrr&#39;:
-
-    reduce</code></pre>
-<pre><code>The following object is masked from &#39;package:grDevices&#39;:
-
-    windows</code></pre>
-<pre><code>Loading required package: GenomeInfoDb</code></pre>
-<pre><code>Loading required package: Biobase</code></pre>
-<pre><code>Welcome to Bioconductor
-
-    Vignettes contain introductory material; view with
-    &#39;browseVignettes()&#39;. To cite Bioconductor, see
-    &#39;citation(&quot;Biobase&quot;)&#39;, and for packages &#39;citation(&quot;pkgname&quot;)&#39;.</code></pre>
-<pre><code>Loading required package: DelayedArray</code></pre>
-<pre><code>Loading required package: matrixStats</code></pre>
-<pre><code>
-Attaching package: &#39;matrixStats&#39;</code></pre>
-<pre><code>The following objects are masked from &#39;package:Biobase&#39;:
-
-    anyMissing, rowMedians</code></pre>
-<pre><code>The following object is masked from &#39;package:dplyr&#39;:
-
-    count</code></pre>
-<pre><code>
-Attaching package: &#39;DelayedArray&#39;</code></pre>
-<pre><code>The following objects are masked from &#39;package:matrixStats&#39;:
-
-    colMaxs, colMins, colRanges, rowMaxs, rowMins, rowRanges</code></pre>
-<pre><code>The following object is masked from &#39;package:purrr&#39;:
-
-    simplify</code></pre>
-<pre><code>The following objects are masked from &#39;package:base&#39;:
-
-    aperm, apply, rowsum</code></pre>
-<pre><code>Loading required package: survival</code></pre>
-<pre><code>Loading required package: survminer</code></pre>
-<pre><code>Loading required package: ggpubr</code></pre>
-<pre><code>Loading required package: ggbio</code></pre>
-<pre><code>Registered S3 method overwritten by &#39;GGally&#39;:
-  method from   
-  +.gg   ggplot2</code></pre>
-<pre><code>Need specific help about ggbio? try mailing 
- the maintainer or visit http://tengfei.github.com/ggbio/</code></pre>
-<pre><code>
-Attaching package: &#39;ggbio&#39;</code></pre>
-<pre><code>The following objects are masked from &#39;package:ggplot2&#39;:
-
-    geom_bar, geom_rect, geom_segment, ggsave, stat_bin, stat_identity,
-    xlim</code></pre>
-<pre class="r"><code>loaded_libraries &lt;- lapply(libraries, library, character.only = TRUE)</code></pre>
 </div>
 <div id="downloading-gdc-data" class="section level1">
 <h1>Downloading GDC data</h1>
 <ul>
 <li>TCGA head and neck cohort only</li>
 </ul>
-<pre class="r"><code>query &lt;- GDCquery(project = &quot;TCGA-HNSC&quot;,
-                  data.category = &quot;Transcriptome Profiling&quot;,
-                  data.type = &quot;Gene Expression Quantification&quot;, 
-                  workflow.type = &quot;HTSeq - Counts&quot;)</code></pre>
-<pre><code>--------------------------------------</code></pre>
-<pre><code>o GDCquery: Searching in GDC database</code></pre>
-<pre><code>--------------------------------------</code></pre>
-<pre><code>Genome of reference: hg38</code></pre>
-<pre><code>--------------------------------------------</code></pre>
-<pre><code>oo Accessing GDC. This might take a while...</code></pre>
-<pre><code>--------------------------------------------</code></pre>
-<pre><code>ooo Project: TCGA-HNSC</code></pre>
-<pre><code>--------------------</code></pre>
-<pre><code>oo Filtering results</code></pre>
-<pre><code>--------------------</code></pre>
-<pre><code>ooo By data.type</code></pre>
-<pre><code>ooo By workflow.type</code></pre>
-<pre><code>----------------</code></pre>
-<pre><code>oo Checking data</code></pre>
-<pre><code>----------------</code></pre>
-<pre><code>ooo Check if there are duplicated cases</code></pre>
-<pre><code>ooo Check if there results for the query</code></pre>
-<pre><code>-------------------</code></pre>
-<pre><code>o Preparing output</code></pre>
-<pre><code>-------------------</code></pre>
-<pre class="r"><code>GDCdownload(query)</code></pre>
-<pre><code>Downloading data for project TCGA-HNSC</code></pre>
-<pre><code>Of the 546 files for download 546 already exist.</code></pre>
-<pre><code>All samples have been already downloaded</code></pre>
-<pre class="r"><code>data &lt;- GDCprepare(query)</code></pre>
-<pre><code>
-|                                                    |  0%                      
-|                                                    |0.1831502% ~2 m remaining 
-|                                                    |0.3663004% ~1 m remaining 
-|                                                    |0.5494505% ~1 m remaining 
-|                                                    |0.7326007% ~1 m remaining 
-|                                                    |0.9157509% ~1 m remaining 
-|                                                    |1.098901% ~58 s remaining 
-|                                                    |1.282051% ~56 s remaining 
-|                                                    |1.465201% ~54 s remaining 
-|                                                    |1.648352% ~54 s remaining 
-|                                                    |1.831502% ~53 s remaining 
-|=                                                   |2.014652% ~52 s remaining 
-|=                                                   |2.197802% ~51 s remaining 
-|=                                                   |2.380952% ~50 s remaining 
-|=                                                   |2.564103% ~54 s remaining 
-|=                                                   |2.747253% ~53 s remaining 
-|=                                                   |2.930403% ~52 s remaining 
-|=                                                   |3.113553% ~52 s remaining 
-|=                                                   |3.296703% ~52 s remaining 
-|=                                                   |3.479853% ~1 m remaining  
-|=                                                   |3.663004% ~1 m remaining  
-|==                                                  |3.846154% ~1 m remaining  
-|==                                                  |4.029304% ~1 m remaining  
-|==                                                  |4.212454% ~1 m remaining  
-|==                                                  |4.395604% ~1 m remaining  
-|==                                                  |4.578755% ~1 m remaining  
-|==                                                  |4.761905% ~1 m remaining  
-|==                                                  |4.945055% ~59 s remaining 
-|==                                                  |5.128205% ~59 s remaining 
-|==                                                  |5.311355% ~58 s remaining 
-|==                                                  |5.494505% ~57 s remaining 
-|==                                                  |5.677656% ~57 s remaining 
-|===                                                 |5.860806% ~57 s remaining 
-|===                                                 |6.043956% ~56 s remaining 
-|===                                                 |6.227106% ~56 s remaining 
-|===                                                 |6.410256% ~56 s remaining 
-|===                                                 |6.593407% ~56 s remaining 
-|===                                                 |6.776557% ~55 s remaining 
-|===                                                 |6.959707% ~55 s remaining 
-|===                                                 |7.142857% ~55 s remaining 
-|===                                                 |7.326007% ~54 s remaining 
-|===                                                 |7.509158% ~54 s remaining 
-|====                                                |7.692308% ~54 s remaining 
-|====                                                |7.875458% ~54 s remaining 
-|====                                                |8.058608% ~54 s remaining 
-|====                                                |8.241758% ~54 s remaining 
-|====                                                |8.424908% ~53 s remaining 
-|====                                                |8.608059% ~53 s remaining 
-|====                                                |8.791209% ~53 s remaining 
-|====                                                |8.974359% ~52 s remaining 
-|====                                                |9.157509% ~52 s remaining 
-|====                                                |9.340659% ~57 s remaining 
-|====                                                |9.52381% ~57 s remaining  
-|=====                                               |9.70696% ~57 s remaining  
-|=====                                               |9.89011% ~56 s remaining  
-|=====                                               |10.07326% ~56 s remaining 
-|=====                                               |10.25641% ~56 s remaining 
-|=====                                               |10.43956% ~56 s remaining 
-|=====                                               |10.62271% ~55 s remaining 
-|=====                                               |10.80586% ~55 s remaining 
-|=====                                               |10.98901% ~54 s remaining 
-|=====                                               |11.17216% ~54 s remaining 
-|=====                                               |11.35531% ~54 s remaining 
-|======                                              |11.53846% ~53 s remaining 
-|======                                              |11.72161% ~53 s remaining 
-|======                                              |11.90476% ~53 s remaining 
-|======                                              |12.08791% ~52 s remaining 
-|======                                              |12.27106% ~52 s remaining 
-|======                                              |12.45421% ~55 s remaining 
-|======                                              |12.63736% ~55 s remaining 
-|======                                              |12.82051% ~55 s remaining 
-|======                                              |13.00366% ~54 s remaining 
-|======                                              |13.18681% ~54 s remaining 
-|======                                              |13.36996% ~54 s remaining 
-|=======                                             |13.55311% ~53 s remaining 
-|=======                                             |13.73626% ~53 s remaining 
-|=======                                             |13.91941% ~53 s remaining 
-|=======                                             |14.10256% ~52 s remaining 
-|=======                                             |14.28571% ~52 s remaining 
-|=======                                             |14.46886% ~52 s remaining 
-|=======                                             |14.65201% ~51 s remaining 
-|=======                                             |14.83516% ~51 s remaining 
-|=======                                             |15.01832% ~51 s remaining 
-|=======                                             |15.20147% ~51 s remaining 
-|========                                            |15.38462% ~50 s remaining 
-|========                                            |15.56777% ~50 s remaining 
-|========                                            |15.75092% ~50 s remaining 
-|========                                            |15.93407% ~50 s remaining 
-|========                                            |16.11722% ~49 s remaining 
-|========                                            |16.30037% ~49 s remaining 
-|========                                            |16.48352% ~49 s remaining 
-|========                                            |16.66667% ~48 s remaining 
-|========                                            |16.84982% ~48 s remaining 
-|========                                            |17.03297% ~48 s remaining 
-|========                                            |17.21612% ~48 s remaining 
-|=========                                           |17.39927% ~48 s remaining 
-|=========                                           |17.58242% ~48 s remaining 
-|=========                                           |17.76557% ~47 s remaining 
-|=========                                           |17.94872% ~47 s remaining 
-|=========                                           |18.13187% ~47 s remaining 
-|=========                                           |18.31502% ~47 s remaining 
-|=========                                           |18.49817% ~46 s remaining 
-|=========                                           |18.68132% ~46 s remaining 
-|=========                                           |18.86447% ~46 s remaining 
-|=========                                           |19.04762% ~46 s remaining 
-|==========                                          |19.23077% ~46 s remaining 
-|==========                                          |19.41392% ~46 s remaining 
-|==========                                          |19.59707% ~45 s remaining 
-|==========                                          |19.78022% ~45 s remaining 
-|==========                                          |19.96337% ~45 s remaining 
-|==========                                          |20.14652% ~45 s remaining 
-|==========                                          |20.32967% ~45 s remaining 
-|==========                                          |20.51282% ~44 s remaining 
-|==========                                          |20.69597% ~44 s remaining 
-|==========                                          |20.87912% ~44 s remaining 
-|==========                                          |21.06227% ~44 s remaining 
-|===========                                         |21.24542% ~44 s remaining 
-|===========                                         |21.42857% ~44 s remaining 
-|===========                                         |21.61172% ~44 s remaining 
-|===========                                         |21.79487% ~43 s remaining 
-|===========                                         |21.97802% ~43 s remaining 
-|===========                                         |22.16117% ~43 s remaining 
-|===========                                         |22.34432% ~43 s remaining 
-|===========                                         |22.52747% ~43 s remaining 
-|===========                                         |22.71062% ~43 s remaining 
-|===========                                         |22.89377% ~43 s remaining 
-|============                                        |23.07692% ~42 s remaining 
-|============                                        |23.26007% ~42 s remaining 
-|============                                        |23.44322% ~42 s remaining 
-|============                                        |23.62637% ~42 s remaining 
-|============                                        |23.80952% ~42 s remaining 
-|============                                        |23.99267% ~42 s remaining 
-|============                                        |24.17582% ~42 s remaining 
-|============                                        |24.35897% ~41 s remaining 
-|============                                        |24.54212% ~41 s remaining 
-|============                                        |24.72527% ~41 s remaining 
-|============                                        |24.90842% ~43 s remaining 
-|=============                                       |25.09158% ~42 s remaining 
-|=============                                       |25.27473% ~42 s remaining 
-|=============                                       |25.45788% ~42 s remaining 
-|=============                                       |25.64103% ~42 s remaining 
-|=============                                       |25.82418% ~42 s remaining 
-|=============                                       |26.00733% ~42 s remaining 
-|=============                                       |26.19048% ~42 s remaining 
-|=============                                       |26.37363% ~42 s remaining 
-|=============                                       |26.55678% ~42 s remaining 
-|=============                                       |26.73993% ~42 s remaining 
-|==============                                      |26.92308% ~42 s remaining 
-|==============                                      |27.10623% ~41 s remaining 
-|==============                                      |27.28938% ~41 s remaining 
-|==============                                      |27.47253% ~41 s remaining 
-|==============                                      |27.65568% ~41 s remaining 
-|==============                                      |27.83883% ~41 s remaining 
-|==============                                      |28.02198% ~41 s remaining 
-|==============                                      |28.20513% ~41 s remaining 
-|==============                                      |28.38828% ~41 s remaining 
-|==============                                      |28.57143% ~41 s remaining 
-|==============                                      |28.75458% ~41 s remaining 
-|===============                                     |28.93773% ~40 s remaining 
-|===============                                     |29.12088% ~40 s remaining 
-|===============                                     |29.30403% ~40 s remaining 
-|===============                                     |29.48718% ~40 s remaining 
-|===============                                     |29.67033% ~40 s remaining 
-|===============                                     |29.85348% ~40 s remaining 
-|===============                                     |30.03663% ~40 s remaining 
-|===============                                     |30.21978% ~40 s remaining 
-|===============                                     |30.40293% ~40 s remaining 
-|===============                                     |30.58608% ~40 s remaining 
-|================                                    |30.76923% ~40 s remaining 
-|================                                    |30.95238% ~40 s remaining 
-|================                                    |31.13553% ~40 s remaining 
-|================                                    |31.31868% ~40 s remaining 
-|================                                    |31.50183% ~40 s remaining 
-|================                                    |31.68498% ~39 s remaining 
-|================                                    |31.86813% ~39 s remaining 
-|================                                    |32.05128% ~39 s remaining 
-|================                                    |32.23443% ~39 s remaining 
-|================                                    |32.41758% ~39 s remaining 
-|================                                    |32.60073% ~39 s remaining 
-|=================                                   |32.78388% ~39 s remaining 
-|=================                                   |32.96703% ~39 s remaining 
-|=================                                   |33.15018% ~39 s remaining 
-|=================                                   |33.33333% ~39 s remaining 
-|=================                                   |33.51648% ~39 s remaining 
-|=================                                   |33.69963% ~38 s remaining 
-|=================                                   |33.88278% ~38 s remaining 
-|=================                                   |34.06593% ~38 s remaining 
-|=================                                   |34.24908% ~38 s remaining 
-|=================                                   |34.43223% ~39 s remaining 
-|==================                                  |34.61538% ~39 s remaining 
-|==================                                  |34.79853% ~39 s remaining 
-|==================                                  |34.98168% ~39 s remaining 
-|==================                                  |35.16484% ~38 s remaining 
-|==================                                  |35.34799% ~38 s remaining 
-|==================                                  |35.53114% ~38 s remaining 
-|==================                                  |35.71429% ~38 s remaining 
-|==================                                  |35.89744% ~38 s remaining 
-|==================                                  |36.08059% ~38 s remaining 
-|==================                                  |36.26374% ~38 s remaining 
-|==================                                  |36.44689% ~38 s remaining 
-|===================                                 |36.63004% ~37 s remaining 
-|===================                                 |36.81319% ~37 s remaining 
-|===================                                 |36.99634% ~37 s remaining 
-|===================                                 |37.17949% ~37 s remaining 
-|===================                                 |37.36264% ~37 s remaining 
-|===================                                 |37.54579% ~37 s remaining 
-|===================                                 |37.72894% ~36 s remaining 
-|===================                                 |37.91209% ~36 s remaining 
-|===================                                 |38.09524% ~36 s remaining 
-|===================                                 |38.27839% ~36 s remaining 
-|====================                                |38.46154% ~36 s remaining 
-|====================                                |38.64469% ~36 s remaining 
-|====================                                |38.82784% ~36 s remaining 
-|====================                                |39.01099% ~36 s remaining 
-|====================                                |39.19414% ~35 s remaining 
-|====================                                |39.37729% ~35 s remaining 
-|====================                                |39.56044% ~35 s remaining 
-|====================                                |39.74359% ~35 s remaining 
-|====================                                |39.92674% ~35 s remaining 
-|====================                                |40.10989% ~35 s remaining 
-|====================                                |40.29304% ~35 s remaining 
-|=====================                               |40.47619% ~34 s remaining 
-|=====================                               |40.65934% ~34 s remaining 
-|=====================                               |40.84249% ~34 s remaining 
-|=====================                               |41.02564% ~34 s remaining 
-|=====================                               |41.20879% ~34 s remaining 
-|=====================                               |41.39194% ~34 s remaining 
-|=====================                               |41.57509% ~34 s remaining 
-|=====================                               |41.75824% ~33 s remaining 
-|=====================                               |41.94139% ~33 s remaining 
-|=====================                               |42.12454% ~33 s remaining 
-|======================                              |42.30769% ~33 s remaining 
-|======================                              |42.49084% ~33 s remaining 
-|======================                              |42.67399% ~33 s remaining 
-|======================                              |42.85714% ~33 s remaining 
-|======================                              |43.04029% ~33 s remaining 
-|======================                              |43.22344% ~32 s remaining 
-|======================                              |43.40659% ~32 s remaining 
-|======================                              |43.58974% ~32 s remaining 
-|======================                              |43.77289% ~32 s remaining 
-|======================                              |43.95604% ~32 s remaining 
-|======================                              |44.13919% ~32 s remaining 
-|=======================                             |44.32234% ~32 s remaining 
-|=======================                             |44.50549% ~32 s remaining 
-|=======================                             |44.68864% ~32 s remaining 
-|=======================                             |44.87179% ~32 s remaining 
-|=======================                             |45.05495% ~32 s remaining 
-|=======================                             |45.2381% ~32 s remaining  
-|=======================                             |45.42125% ~32 s remaining 
-|=======================                             |45.6044% ~32 s remaining  
-|=======================                             |45.78755% ~31 s remaining 
-|=======================                             |45.9707% ~32 s remaining  
-|========================                            |46.15385% ~32 s remaining 
-|========================                            |46.337% ~32 s remaining   
-|========================                            |46.52015% ~32 s remaining 
-|========================                            |46.7033% ~32 s remaining  
-|========================                            |46.88645% ~32 s remaining 
-|========================                            |47.0696% ~31 s remaining  
-|========================                            |47.25275% ~31 s remaining 
-|========================                            |47.4359% ~31 s remaining  
-|========================                            |47.61905% ~31 s remaining 
-|========================                            |47.8022% ~31 s remaining  
-|========================                            |47.98535% ~31 s remaining 
-|=========================                           |48.1685% ~31 s remaining  
-|=========================                           |48.35165% ~31 s remaining 
-|=========================                           |48.5348% ~31 s remaining  
-|=========================                           |48.71795% ~31 s remaining 
-|=========================                           |48.9011% ~30 s remaining  
-|=========================                           |49.08425% ~30 s remaining 
-|=========================                           |49.2674% ~30 s remaining  
-|=========================                           |49.45055% ~30 s remaining 
-|=========================                           |49.6337% ~30 s remaining  
-|=========================                           |49.81685% ~30 s remaining 
-|==========================                          | 50% ~30 s remaining      
-|==========================                          |50.18315% ~30 s remaining 
-|==========================                          |50.3663% ~29 s remaining  
-|==========================                          |50.54945% ~29 s remaining 
-|==========================                          |50.7326% ~29 s remaining  
-|==========================                          |50.91575% ~29 s remaining 
-|==========================                          |51.0989% ~29 s remaining  
-|==========================                          |51.28205% ~29 s remaining 
-|==========================                          |51.4652% ~29 s remaining  
-|==========================                          |51.64835% ~29 s remaining 
-|==========================                          |51.8315% ~28 s remaining  
-|===========================                         |52.01465% ~28 s remaining 
-|===========================                         |52.1978% ~28 s remaining  
-|===========================                         |52.38095% ~28 s remaining 
-|===========================                         |52.5641% ~28 s remaining  
-|===========================                         |52.74725% ~28 s remaining 
-|===========================                         |52.9304% ~28 s remaining  
-|===========================                         |53.11355% ~28 s remaining 
-|===========================                         |53.2967% ~27 s remaining  
-|===========================                         |53.47985% ~27 s remaining 
-|===========================                         |53.663% ~27 s remaining   
-|============================                        |53.84615% ~27 s remaining 
-|============================                        |54.0293% ~27 s remaining  
-|============================                        |54.21245% ~27 s remaining 
-|============================                        |54.3956% ~27 s remaining  
-|============================                        |54.57875% ~27 s remaining 
-|============================                        |54.7619% ~26 s remaining  
-|============================                        |54.94505% ~26 s remaining 
-|============================                        |55.12821% ~26 s remaining 
-|============================                        |55.31136% ~26 s remaining 
-|============================                        |55.49451% ~26 s remaining 
-|============================                        |55.67766% ~26 s remaining 
-|=============================                       |55.86081% ~26 s remaining 
-|=============================                       |56.04396% ~26 s remaining 
-|=============================                       |56.22711% ~25 s remaining 
-|=============================                       |56.41026% ~25 s remaining 
-|=============================                       |56.59341% ~25 s remaining 
-|=============================                       |56.77656% ~25 s remaining 
-|=============================                       |56.95971% ~25 s remaining 
-|=============================                       |57.14286% ~25 s remaining 
-|=============================                       |57.32601% ~25 s remaining 
-|=============================                       |57.50916% ~25 s remaining 
-|=============================                       |57.69231% ~24 s remaining 
-|==============================                      |57.87546% ~24 s remaining 
-|==============================                      |58.05861% ~24 s remaining 
-|==============================                      |58.24176% ~24 s remaining 
-|==============================                      |58.42491% ~24 s remaining 
-|==============================                      |58.60806% ~24 s remaining 
-|==============================                      |58.79121% ~24 s remaining 
-|==============================                      |58.97436% ~24 s remaining 
-|==============================                      |59.15751% ~24 s remaining 
-|==============================                      |59.34066% ~23 s remaining 
-|==============================                      |59.52381% ~23 s remaining 
-|===============================                     |59.70696% ~24 s remaining 
-|===============================                     |59.89011% ~24 s remaining 
-|===============================                     |60.07326% ~24 s remaining 
-|===============================                     |60.25641% ~23 s remaining 
-|===============================                     |60.43956% ~23 s remaining 
-|===============================                     |60.62271% ~23 s remaining 
-|===============================                     |60.80586% ~23 s remaining 
-|===============================                     |60.98901% ~23 s remaining 
-|===============================                     |61.17216% ~23 s remaining 
-|===============================                     |61.35531% ~23 s remaining 
-|================================                    |61.53846% ~23 s remaining 
-|================================                    |61.72161% ~22 s remaining 
-|================================                    |61.90476% ~22 s remaining 
-|================================                    |62.08791% ~22 s remaining 
-|================================                    |62.27106% ~22 s remaining 
-|================================                    |62.45421% ~22 s remaining 
-|================================                    |62.63736% ~22 s remaining 
-|================================                    |62.82051% ~22 s remaining 
-|================================                    |63.00366% ~22 s remaining 
-|================================                    |63.18681% ~22 s remaining 
-|================================                    |63.36996% ~21 s remaining 
-|=================================                   |63.55311% ~21 s remaining 
-|=================================                   |63.73626% ~21 s remaining 
-|=================================                   |63.91941% ~21 s remaining 
-|=================================                   |64.10256% ~21 s remaining 
-|=================================                   |64.28571% ~21 s remaining 
-|=================================                   |64.46886% ~21 s remaining 
-|=================================                   |64.65201% ~21 s remaining 
-|=================================                   |64.83516% ~21 s remaining 
-|=================================                   |65.01832% ~20 s remaining 
-|=================================                   |65.20147% ~20 s remaining 
-|==================================                  |65.38462% ~20 s remaining 
-|==================================                  |65.56777% ~20 s remaining 
-|==================================                  |65.75092% ~20 s remaining 
-|==================================                  |65.93407% ~20 s remaining 
-|==================================                  |66.11722% ~20 s remaining 
-|==================================                  |66.30037% ~20 s remaining 
-|==================================                  |66.48352% ~20 s remaining 
-|==================================                  |66.66667% ~19 s remaining 
-|==================================                  |66.84982% ~19 s remaining 
-|==================================                  |67.03297% ~19 s remaining 
-|==================================                  |67.21612% ~19 s remaining 
-|===================================                 |67.39927% ~19 s remaining 
-|===================================                 |67.58242% ~19 s remaining 
-|===================================                 |67.76557% ~19 s remaining 
-|===================================                 |67.94872% ~19 s remaining 
-|===================================                 |68.13187% ~19 s remaining 
-|===================================                 |68.31502% ~18 s remaining 
-|===================================                 |68.49817% ~18 s remaining 
-|===================================                 |68.68132% ~18 s remaining 
-|===================================                 |68.86447% ~18 s remaining 
-|===================================                 |69.04762% ~18 s remaining 
-|====================================                |69.23077% ~18 s remaining 
-|====================================                |69.41392% ~18 s remaining 
-|====================================                |69.59707% ~18 s remaining 
-|====================================                |69.78022% ~17 s remaining 
-|====================================                |69.96337% ~17 s remaining 
-|====================================                |70.14652% ~17 s remaining 
-|====================================                |70.32967% ~17 s remaining 
-|====================================                |70.51282% ~17 s remaining 
-|====================================                |70.69597% ~17 s remaining 
-|====================================                |70.87912% ~17 s remaining 
-|====================================                |71.06227% ~17 s remaining 
-|=====================================               |71.24542% ~17 s remaining 
-|=====================================               |71.42857% ~17 s remaining 
-|=====================================               |71.61172% ~16 s remaining 
-|=====================================               |71.79487% ~16 s remaining 
-|=====================================               |71.97802% ~16 s remaining 
-|=====================================               |72.16117% ~16 s remaining 
-|=====================================               |72.34432% ~16 s remaining 
-|=====================================               |72.52747% ~16 s remaining 
-|=====================================               |72.71062% ~16 s remaining 
-|=====================================               |72.89377% ~16 s remaining 
-|======================================              |73.07692% ~16 s remaining 
-|======================================              |73.26007% ~15 s remaining 
-|======================================              |73.44322% ~15 s remaining 
-|======================================              |73.62637% ~15 s remaining 
-|======================================              |73.80952% ~15 s remaining 
-|======================================              |73.99267% ~15 s remaining 
-|======================================              |74.17582% ~15 s remaining 
-|======================================              |74.35897% ~15 s remaining 
-|======================================              |74.54212% ~15 s remaining 
-|======================================              |74.72527% ~15 s remaining 
-|======================================              |74.90842% ~14 s remaining 
-|=======================================             |75.09158% ~14 s remaining 
-|=======================================             |75.27473% ~14 s remaining 
-|=======================================             |75.45788% ~14 s remaining 
-|=======================================             |75.64103% ~14 s remaining 
-|=======================================             |75.82418% ~14 s remaining 
-|=======================================             |76.00733% ~14 s remaining 
-|=======================================             |76.19048% ~14 s remaining 
-|=======================================             |76.37363% ~14 s remaining 
-|=======================================             |76.55678% ~14 s remaining 
-|=======================================             |76.73993% ~14 s remaining 
-|========================================            |76.92308% ~13 s remaining 
-|========================================            |77.10623% ~13 s remaining 
-|========================================            |77.28938% ~13 s remaining 
-|========================================            |77.47253% ~13 s remaining 
-|========================================            |77.65568% ~13 s remaining 
-|========================================            |77.83883% ~13 s remaining 
-|========================================            |78.02198% ~13 s remaining 
-|========================================            |78.20513% ~13 s remaining 
-|========================================            |78.38828% ~13 s remaining 
-|========================================            |78.57143% ~13 s remaining 
-|========================================            |78.75458% ~12 s remaining 
-|=========================================           |78.93773% ~12 s remaining 
-|=========================================           |79.12088% ~12 s remaining 
-|=========================================           |79.30403% ~12 s remaining 
-|=========================================           |79.48718% ~12 s remaining 
-|=========================================           |79.67033% ~12 s remaining 
-|=========================================           |79.85348% ~12 s remaining 
-|=========================================           |80.03663% ~12 s remaining 
-|=========================================           |80.21978% ~12 s remaining 
-|=========================================           |80.40293% ~11 s remaining 
-|=========================================           |80.58608% ~11 s remaining 
-|==========================================          |80.76923% ~11 s remaining 
-|==========================================          |80.95238% ~11 s remaining 
-|==========================================          |81.13553% ~11 s remaining 
-|==========================================          |81.31868% ~11 s remaining 
-|==========================================          |81.50183% ~11 s remaining 
-|==========================================          |81.68498% ~11 s remaining 
-|==========================================          |81.86813% ~11 s remaining 
-|==========================================          |82.05128% ~10 s remaining 
-|==========================================          |82.23443% ~10 s remaining 
-|==========================================          |82.41758% ~10 s remaining 
-|==========================================          |82.60073% ~10 s remaining 
-|===========================================         |82.78388% ~10 s remaining 
-|===========================================         |82.96703% ~10 s remaining 
-|===========================================         |83.15018% ~10 s remaining 
-|===========================================         |83.33333% ~10 s remaining 
-|===========================================         |83.51648% ~10 s remaining 
-|===========================================         |83.69963% ~9 s remaining  
-|===========================================         |83.88278% ~9 s remaining  
-|===========================================         |84.06593% ~9 s remaining  
-|===========================================         |84.24908% ~9 s remaining  
-|===========================================         |84.43223% ~9 s remaining  
-|============================================        |84.61538% ~9 s remaining  
-|============================================        |84.79853% ~9 s remaining  
-|============================================        |84.98168% ~9 s remaining  
-|============================================        |85.16484% ~9 s remaining  
-|============================================        |85.34799% ~8 s remaining  
-|============================================        |85.53114% ~8 s remaining  
-|============================================        |85.71429% ~8 s remaining  
-|============================================        |85.89744% ~8 s remaining  
-|============================================        |86.08059% ~8 s remaining  
-|============================================        |86.26374% ~8 s remaining  
-|============================================        |86.44689% ~8 s remaining  
-|=============================================       |86.63004% ~8 s remaining  
-|=============================================       |86.81319% ~8 s remaining  
-|=============================================       |86.99634% ~7 s remaining  
-|=============================================       |87.17949% ~7 s remaining  
-|=============================================       |87.36264% ~7 s remaining  
-|=============================================       |87.54579% ~7 s remaining  
-|=============================================       |87.72894% ~7 s remaining  
-|=============================================       |87.91209% ~7 s remaining  
-|=============================================       |88.09524% ~7 s remaining  
-|=============================================       |88.27839% ~7 s remaining  
-|==============================================      |88.46154% ~7 s remaining  
-|==============================================      |88.64469% ~7 s remaining  
-|==============================================      |88.82784% ~6 s remaining  
-|==============================================      |89.01099% ~6 s remaining  
-|==============================================      |89.19414% ~6 s remaining  
-|==============================================      |89.37729% ~6 s remaining  
-|==============================================      |89.56044% ~6 s remaining  
-|==============================================      |89.74359% ~6 s remaining  
-|==============================================      |89.92674% ~6 s remaining  
-|==============================================      |90.10989% ~6 s remaining  
-|==============================================      |90.29304% ~6 s remaining  
-|===============================================     |90.47619% ~5 s remaining  
-|===============================================     |90.65934% ~5 s remaining  
-|===============================================     |90.84249% ~5 s remaining  
-|===============================================     |91.02564% ~5 s remaining  
-|===============================================     |91.20879% ~5 s remaining  
-|===============================================     |91.39194% ~5 s remaining  
-|===============================================     |91.57509% ~5 s remaining  
-|===============================================     |91.75824% ~5 s remaining  
-|===============================================     |91.94139% ~5 s remaining  
-|===============================================     |92.12454% ~5 s remaining  
-|================================================    |92.30769% ~4 s remaining  
-|================================================    |92.49084% ~4 s remaining  
-|================================================    |92.67399% ~4 s remaining  
-|================================================    |92.85714% ~4 s remaining  
-|================================================    |93.04029% ~4 s remaining  
-|================================================    |93.22344% ~4 s remaining  
-|================================================    |93.40659% ~4 s remaining  
-|================================================    |93.58974% ~4 s remaining  
-|================================================    |93.77289% ~4 s remaining  
-|================================================    |93.95604% ~3 s remaining  
-|================================================    |94.13919% ~3 s remaining  
-|=================================================   |94.32234% ~3 s remaining  
-|=================================================   |94.50549% ~3 s remaining  
-|=================================================   |94.68864% ~3 s remaining  
-|=================================================   |94.87179% ~3 s remaining  
-|=================================================   |95.05495% ~3 s remaining  
-|=================================================   |95.2381% ~3 s remaining   
-|=================================================   |95.42125% ~3 s remaining  
-|=================================================   |95.6044% ~3 s remaining   
-|=================================================   |95.78755% ~2 s remaining  
-|=================================================   |95.9707% ~2 s remaining   
-|==================================================  |96.15385% ~2 s remaining  
-|==================================================  |96.337% ~2 s remaining    
-|==================================================  |96.52015% ~2 s remaining  
-|==================================================  |96.7033% ~2 s remaining   
-|==================================================  |96.88645% ~2 s remaining  
-|==================================================  |97.0696% ~2 s remaining   
-|==================================================  |97.25275% ~2 s remaining  
-|==================================================  |97.4359% ~1 s remaining   
-|==================================================  |97.61905% ~1 s remaining  
-|==================================================  |97.8022% ~1 s remaining   
-|==================================================  |97.98535% ~1 s remaining  
-|=================================================== |98.1685% ~1 s remaining   
-|=================================================== |98.35165% ~1 s remaining  
-|=================================================== |98.5348% ~1 s remaining   
-|=================================================== |98.71795% ~1 s remaining  
-|=================================================== |98.9011% ~1 s remaining   
-|=================================================== |99.08425% ~1 s remaining  
-|=================================================== |99.2674% ~0 s remaining   
-|=================================================== |99.45055% ~0 s remaining  
-|=================================================== |99.6337% ~0 s remaining   
-|=================================================== |99.81685% ~0 s remaining  
-|====================================================|100% ~0 s remaining       
-|====================================================|100%                      Completed after 57 s </code></pre>
-<pre><code>Starting to add information to samples</code></pre>
-<pre><code> =&gt; Add clinical information to samples</code></pre>
-<pre><code> =&gt; Adding TCGA molecular information from marker papers</code></pre>
-<pre><code> =&gt; Information will have prefix &#39;paper_&#39; </code></pre>
-<pre><code>hnsc subtype information from:doi:10.1038/nature14129</code></pre>
-<pre><code>Accessing www.ensembl.org to get gene information</code></pre>
-<pre><code>Downloading genome information (try:0) Using: Human genes (GRCh38.p13)</code></pre>
-<pre><code>From the 60483 genes we couldn&#39;t map 4026</code></pre>
 </div>
 <div id="data-exploration" class="section level1">
 <h1>Data Exploration</h1>
 <ul>
 <li>Listing all (clinical) metadata - some of this data is not particularly interesting/is missing, but some of the clinical data (extracted here) is meaningful</li>
-<li>Using history of alcohol use as a primary variable to examine here ** A breakdown of stage vs alcohol use (removing data where it isn’t reported) ** Survival curves based on alcohol use</li>
+<li>Using history of alcohol use as a primary variable to examine here ** A breakdown of stage vs alcohol use (removing data where it isn’t reported) ** Survival curves based on alcohol use - no clear differences here</li>
 </ul>
 <pre class="r"><code>print(colnames(colData(data)))</code></pre>
 <pre><code> [1] &quot;barcode&quot;                     &quot;patient&quot;                    
  [3] &quot;sample&quot;                      &quot;shortLetterCode&quot;            
  [5] &quot;definition&quot;                  &quot;sample_submitter_id&quot;        
- [7] &quot;state&quot;                       &quot;sample_type&quot;                
- [9] &quot;sample_id&quot;                   &quot;days_to_collection&quot;         
-[11] &quot;pathology_report_uuid&quot;       &quot;tissue_type&quot;                
-[13] &quot;initial_weight&quot;              &quot;shortest_dimension&quot;         
-[15] &quot;longest_dimension&quot;           &quot;submitter_id&quot;               
-[17] &quot;intermediate_dimension&quot;      &quot;is_ffpe&quot;                    
-[19] &quot;sample_type_id&quot;              &quot;oct_embedded&quot;               
-[21] &quot;age_at_diagnosis&quot;            &quot;primary_diagnosis&quot;          
-[23] &quot;ajcc_staging_system_edition&quot; &quot;tumor_stage&quot;                
-[25] &quot;progression_or_recurrence&quot;   &quot;ajcc_pathologic_n&quot;          
-[27] &quot;ajcc_pathologic_t&quot;           &quot;ajcc_clinical_t&quot;            
-[29] &quot;prior_treatment&quot;             &quot;ajcc_clinical_stage&quot;        
-[31] &quot;ajcc_clinical_m&quot;             &quot;prior_malignancy&quot;           
-[33] &quot;morphology&quot;                  &quot;diagnosis_id&quot;               
-[35] &quot;days_to_last_follow_up&quot;      &quot;synchronous_malignancy&quot;     
-[37] &quot;tissue_or_organ_of_origin&quot;   &quot;treatments&quot;                 
-[39] &quot;tumor_grade&quot;                 &quot;ajcc_pathologic_stage&quot;      
-[41] &quot;year_of_diagnosis&quot;           &quot;site_of_resection_or_biopsy&quot;
-[43] &quot;icd_10_code&quot;                 &quot;classification_of_tumor&quot;    
-[45] &quot;days_to_diagnosis&quot;           &quot;ajcc_clinical_n&quot;            
-[47] &quot;last_known_disease_status&quot;   &quot;ajcc_pathologic_m&quot;          
-[49] &quot;years_smoked&quot;                &quot;cigarettes_per_day&quot;         
-[51] &quot;exposure_id&quot;                 &quot;alcohol_history&quot;            
-[53] &quot;pack_years_smoked&quot;           &quot;gender&quot;                     
-[55] &quot;days_to_death&quot;               &quot;vital_status&quot;               
-[57] &quot;ethnicity&quot;                   &quot;demographic_id&quot;             
-[59] &quot;race&quot;                        &quot;age_at_index&quot;               
-[61] &quot;days_to_birth&quot;               &quot;year_of_death&quot;              
-[63] &quot;year_of_birth&quot;               &quot;bcr_patient_barcode&quot;        
-[65] &quot;disease_type&quot;                &quot;releasable&quot;                 
-[67] &quot;primary_site&quot;                &quot;name&quot;                       
-[69] &quot;released&quot;                    &quot;project_id&quot;                 
+ [7] &quot;state&quot;                       &quot;submitter_id&quot;               
+ [9] &quot;longest_dimension&quot;           &quot;intermediate_dimension&quot;     
+[11] &quot;pathology_report_uuid&quot;       &quot;shortest_dimension&quot;         
+[13] &quot;initial_weight&quot;              &quot;sample_id&quot;                  
+[15] &quot;sample_type_id&quot;              &quot;sample_type&quot;                
+[17] &quot;days_to_collection&quot;          &quot;tissue_type&quot;                
+[19] &quot;oct_embedded&quot;                &quot;is_ffpe&quot;                    
+[21] &quot;tumor_stage&quot;                 &quot;prior_malignancy&quot;           
+[23] &quot;age_at_diagnosis&quot;            &quot;diagnosis_id&quot;               
+[25] &quot;days_to_diagnosis&quot;           &quot;icd_10_code&quot;                
+[27] &quot;synchronous_malignancy&quot;      &quot;tumor_grade&quot;                
+[29] &quot;prior_treatment&quot;             &quot;primary_diagnosis&quot;          
+[31] &quot;days_to_last_follow_up&quot;      &quot;site_of_resection_or_biopsy&quot;
+[33] &quot;classification_of_tumor&quot;     &quot;ajcc_clinical_n&quot;            
+[35] &quot;ajcc_clinical_stage&quot;         &quot;morphology&quot;                 
+[37] &quot;ajcc_clinical_t&quot;             &quot;year_of_diagnosis&quot;          
+[39] &quot;ajcc_pathologic_n&quot;           &quot;tissue_or_organ_of_origin&quot;  
+[41] &quot;ajcc_staging_system_edition&quot; &quot;ajcc_pathologic_stage&quot;      
+[43] &quot;ajcc_clinical_m&quot;             &quot;ajcc_pathologic_t&quot;          
+[45] &quot;last_known_disease_status&quot;   &quot;progression_or_recurrence&quot;  
+[47] &quot;treatments&quot;                  &quot;ajcc_pathologic_m&quot;          
+[49] &quot;alcohol_history&quot;             &quot;cigarettes_per_day&quot;         
+[51] &quot;exposure_id&quot;                 &quot;years_smoked&quot;               
+[53] &quot;pack_years_smoked&quot;           &quot;days_to_death&quot;              
+[55] &quot;vital_status&quot;                &quot;year_of_birth&quot;              
+[57] &quot;race&quot;                        &quot;ethnicity&quot;                  
+[59] &quot;age_at_index&quot;                &quot;year_of_death&quot;              
+[61] &quot;gender&quot;                      &quot;days_to_birth&quot;              
+[63] &quot;demographic_id&quot;              &quot;bcr_patient_barcode&quot;        
+[65] &quot;name&quot;                        &quot;released&quot;                   
+[67] &quot;project_id&quot;                  &quot;disease_type&quot;               
+[69] &quot;releasable&quot;                  &quot;primary_site&quot;               
 [71] &quot;paper_patient&quot;               &quot;paper_RNA&quot;                  
 [73] &quot;paper_Methylation&quot;           &quot;paper_RPPA&quot;                 
 [75] &quot;paper_miRNA&quot;                 &quot;paper_Copy.Number&quot;          
@@ -1519,8 +873,9 @@ logical     535      11 </code></pre>
  tidyverse            * 1.3.0    2019-11-21 [1] CRAN (R 4.0.2)
  VariantAnnotation      1.34.0   2020-04-27 [1] Bioconductor  
  vctrs                  0.3.4    2020-08-29 [1] CRAN (R 4.0.2)
+ whisker                0.4      2019-08-28 [1] CRAN (R 4.0.0)
  withr                  2.3.0    2020-09-22 [1] CRAN (R 4.0.2)
- workflowr              1.6.2    2020-04-30 [1] CRAN (R 4.0.2)
+ workflowr            * 1.6.2    2020-04-30 [1] CRAN (R 4.0.2)
  xfun                   0.17     2020-09-09 [1] CRAN (R 4.0.2)
  XML                    3.99-0.5 2020-07-23 [1] CRAN (R 4.0.2)
  xml2                   1.3.2    2020-04-23 [1] CRAN (R 4.0.0)
@@ -1572,39 +927,39 @@ other attached packages:
 [19] readr_1.3.1                 tidyr_1.1.2                
 [21] tibble_3.0.3                ggplot2_3.3.2              
 [23] tidyverse_1.3.0             TCGAbiolinks_2.16.4        
-[25] BiocManager_1.30.10        
+[25] BiocManager_1.30.10         workflowr_1.6.2            
 
 loaded via a namespace (and not attached):
   [1] readxl_1.3.1             backports_1.1.10         Hmisc_4.4-1             
-  [4] workflowr_1.6.2          BiocFileCache_1.12.1     plyr_1.8.6              
-  [7] lazyeval_0.2.2           splines_4.0.2            BiocParallel_1.22.0     
- [10] digest_0.6.25            ensembldb_2.12.1         htmltools_0.5.0         
- [13] fansi_0.4.1              checkmate_2.0.0          magrittr_1.5            
- [16] memoise_1.1.0            BSgenome_1.56.0          cluster_2.1.0           
- [19] openxlsx_4.2.2           Biostrings_2.56.0        modelr_0.1.8            
- [22] R.utils_2.10.1           askpass_1.1              prettyunits_1.1.1       
- [25] jpeg_0.1-8.1             colorspace_1.4-1         blob_1.2.1              
- [28] rvest_0.3.6              rappdirs_0.3.1           haven_2.3.1             
- [31] xfun_0.17                crayon_1.3.4             RCurl_1.98-1.2          
- [34] jsonlite_1.7.1           graph_1.66.0             VariantAnnotation_1.34.0
- [37] zoo_1.8-8                glue_1.4.2               gtable_0.3.0            
- [40] zlibbioc_1.34.0          XVector_0.28.0           car_3.0-10              
- [43] abind_1.4-5              scales_1.1.1             DBI_1.1.0               
- [46] GGally_2.0.0             rstatix_0.6.0            Rcpp_1.0.5              
- [49] xtable_1.8-4             progress_1.2.2           htmlTable_2.1.0         
- [52] foreign_0.8-80           bit_4.0.4                OrganismDbi_1.30.0      
- [55] km.ci_0.5-2              Formula_1.2-3            htmlwidgets_1.5.1       
- [58] httr_1.4.2               RColorBrewer_1.1-2       ellipsis_0.3.1          
- [61] farver_2.0.3             pkgconfig_2.0.3          reshape_0.8.8           
- [64] XML_3.99-0.5             R.methodsS3_1.8.1        nnet_7.3-14             
- [67] dbplyr_1.4.4             labeling_0.3             tidyselect_1.1.0        
- [70] rlang_0.4.7              reshape2_1.4.4           later_1.1.0.1           
- [73] AnnotationDbi_1.50.3     munsell_0.5.0            cellranger_1.1.0        
- [76] tools_4.0.2              downloader_0.4           cli_2.0.2               
- [79] generics_0.0.2           RSQLite_2.2.1            broom_0.7.0             
- [82] evaluate_0.14            yaml_2.2.1               knitr_1.30              
- [85] bit64_4.0.5              fs_1.5.0                 zip_2.1.1               
- [88] survMisc_0.5.5           AnnotationFilter_1.12.0  RBGL_1.64.0             
+  [4] BiocFileCache_1.12.1     plyr_1.8.6               lazyeval_0.2.2          
+  [7] splines_4.0.2            BiocParallel_1.22.0      digest_0.6.25           
+ [10] ensembldb_2.12.1         htmltools_0.5.0          fansi_0.4.1             
+ [13] checkmate_2.0.0          magrittr_1.5             memoise_1.1.0           
+ [16] BSgenome_1.56.0          cluster_2.1.0            openxlsx_4.2.2          
+ [19] Biostrings_2.56.0        modelr_0.1.8             R.utils_2.10.1          
+ [22] askpass_1.1              prettyunits_1.1.1        jpeg_0.1-8.1            
+ [25] colorspace_1.4-1         blob_1.2.1               rvest_0.3.6             
+ [28] rappdirs_0.3.1           haven_2.3.1              xfun_0.17               
+ [31] crayon_1.3.4             RCurl_1.98-1.2           jsonlite_1.7.1          
+ [34] graph_1.66.0             VariantAnnotation_1.34.0 zoo_1.8-8               
+ [37] glue_1.4.2               gtable_0.3.0             zlibbioc_1.34.0         
+ [40] XVector_0.28.0           car_3.0-10               abind_1.4-5             
+ [43] scales_1.1.1             DBI_1.1.0                GGally_2.0.0            
+ [46] rstatix_0.6.0            Rcpp_1.0.5               xtable_1.8-4            
+ [49] progress_1.2.2           htmlTable_2.1.0          foreign_0.8-80          
+ [52] bit_4.0.4                OrganismDbi_1.30.0       km.ci_0.5-2             
+ [55] Formula_1.2-3            htmlwidgets_1.5.1        httr_1.4.2              
+ [58] RColorBrewer_1.1-2       ellipsis_0.3.1           farver_2.0.3            
+ [61] pkgconfig_2.0.3          reshape_0.8.8            XML_3.99-0.5            
+ [64] R.methodsS3_1.8.1        nnet_7.3-14              dbplyr_1.4.4            
+ [67] labeling_0.3             tidyselect_1.1.0         rlang_0.4.7             
+ [70] reshape2_1.4.4           later_1.1.0.1            AnnotationDbi_1.50.3    
+ [73] munsell_0.5.0            cellranger_1.1.0         tools_4.0.2             
+ [76] downloader_0.4           cli_2.0.2                generics_0.0.2          
+ [79] RSQLite_2.2.1            broom_0.7.0              evaluate_0.14           
+ [82] yaml_2.2.1               knitr_1.30               bit64_4.0.5             
+ [85] fs_1.5.0                 zip_2.1.1                survMisc_0.5.5          
+ [88] AnnotationFilter_1.12.0  RBGL_1.64.0              whisker_0.4             
  [91] R.oo_1.24.0              xml2_1.3.2               biomaRt_2.44.1          
  [94] compiler_4.0.2           rstudioapi_0.11          curl_4.3                
  [97] png_0.1-7                ggsignif_0.6.0           reprex_0.3.0            

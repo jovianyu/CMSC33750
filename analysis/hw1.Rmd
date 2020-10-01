@@ -11,7 +11,7 @@ editor_options:
 # Setup
 * Loading necessary libraries
 
-```{r Setup}
+```{r Setup, echo=FALSE, results='hide', fig.keep='all', message = FALSE}
 libraries <- c("BiocManager", "TCGAbiolinks", "tidyverse", "DT", "SummarizedExperiment", "survival", "survminer", "ggbio")
 biocmanager <- c(FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE)
 
@@ -34,7 +34,7 @@ loaded_libraries <- lapply(libraries, library, character.only = TRUE)
 # Downloading GDC data
 * TCGA head and neck cohort only
 
-```{r Data Download}
+```{r Data Download, echo=FALSE, results='hide', fig.keep='all', message = FALSE}
 query <- GDCquery(project = "TCGA-HNSC",
                   data.category = "Transcriptome Profiling",
                   data.type = "Gene Expression Quantification", 
