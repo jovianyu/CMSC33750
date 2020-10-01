@@ -1,0 +1,116 @@
+---
+title: "CMSC33750 - Homework 1"
+site: workflowr::wflow_site
+output:
+  workflowr::wflow_html:
+    toc: true
+editor_options:
+  chunk_output_type: console
+---
+
+# Setup
+* Loading necessary libraries
+
+```{r Setup}
+libraries <- c("BiocManager", "TCGAbiolinks", "tidyverse", "DT", "SummarizedExperiment", "survival", "survminer", "ggbio")
+biocmanager <- c(FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE)
+
+libreq <- function(package, bioc) {
+  if (!require(package, character.only = TRUE)) {
+    ifelse(bioc, BiocManager::install(package), install.packages(package))
+  }
+}
+
+installed_libraries <- mapply(
+  libreq,
+  libraries,
+  biocmanager
+)
+
+loaded_libraries <- lapply(libraries, library, character.only = TRUE)
+
+```
+
+# Downloading GDC data
+* TCGA head and neck cohort only
+
+```{r Data Download}
+query <- GDCquery(project = "TCGA-HNSC",
+                  data.category = "Transcriptome Profiling",
+                  data.type = "Gene Expression Quantification", 
+                  workflow.type = "HTSeq - Counts")
+GDCdownload(query)
+data <- GDCprepare(query)
+```
+
+# Data Exploration
+* Listing all (clinical) metadata - some of this data is not particularly interesting/is missing, but some of the clinical data (extracted here) is meaningful
+* Using history of alcohol use as a primary variable to examine here
+** A breakdown of stage vs alcohol use (removing data where it isn't reported)
+** Survival curves based on alcohol use - no clear differences here
+
+```{r Exploration}
+print(colnames(colData(data)))
+
+tib_alc_vs_stage <- tibble(Alcohol = factor(data$alcohol_history), Stage = factor(data$tumor_stage)) %>%
+  filter(Alcohol != "Not Reported", Stage != "not reported") %>%
+  group_by(Alcohol, Stage) %>%
+  summarise(n = n())
+
+tib_alc_vs_stage %>%
+  ggplot(aes(x = Alcohol, y = Stage, fill = n)) +
+  geom_raster()
+
+tib_survival_alcohol <- tibble(
+    days_to_death = data$days_to_death,
+    days_to_last_follow_up = data$days_to_last_follow_up,
+    vital_status = factor(data$vital_status),
+    alcohol = factor(data$alcohol_history)
+  ) %>%
+  mutate(
+    vital_status = ifelse(vital_status == "Alive", 0, 1),
+    years = as.numeric(ifelse(vital_status == 1, days_to_death, days_to_last_follow_up))/365.0,
+    alcohol = ifelse(alcohol == "Yes", 1, ifelse(alcohol == "No", 0, NA_character_))
+  ) %>%
+  select(vital_status, alcohol, years) %>%
+  na.omit()
+
+fit_survival_alcohol <- survfit(Surv(years, vital_status) ~ alcohol, data = tib_survival_alcohol)
+
+ggsurvplot(fit_survival_alcohol, data = tib_survival_alcohol, risk.table = TRUE,
+           legend.labs = c("No Alcohol History", "Alcohol History"),
+           xlab = "Survival (Years)")
+
+```
+
+# Transcript Counts
+* Showing counts here, subsetting on the first on only patients with Stage IVB disease
+** Generates a reasonably sized subset of 11 patients with an interesting phenotype
+* Plotting with ggbio (to allow for direct manipulation of a SummarizedExperiment object with ggplot) with a log transform of both axes to make the visualization reasonable
+
+```{r Histogram of Counts}
+list_stageivb <- data$tumor_stage == "stage ivb"
+
+print(summary(list_stageivb))
+
+data[, list_stageivb] %>%
+  ggplot(aes(x = value), assay.id = 1L, environment = parent.frame()) +
+  geom_histogram(na.rm = TRUE) +
+  scale_x_log10(
+   breaks = scales::trans_breaks("log10", function(x) 10^x),
+   labels = scales::trans_format("log10", scales::math_format(10^.x))
+  ) +
+  scale_y_log10(
+   breaks = scales::trans_breaks("log10", function(x) 10^x),
+   labels = scales::trans_format("log10", scales::math_format(10^.x))
+  ) +
+  annotation_logticks() +
+  theme_bw() +
+  labs(title = "Histogram of RNA Transcript Counts in the\nTCGA H&N Patients with Stage IVB Disease") + xlab("Number of Transcripts") + ylab("Number of Genes")
+```
+
+# Session Info
+
+```{r Session Info}
+sessioninfo::package_info()
+```
